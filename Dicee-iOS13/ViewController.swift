@@ -14,16 +14,36 @@ class ViewController: UIViewController {
     //IBOutlet allows me to reference a UI element.
     @IBOutlet weak var diceImageViewTwo: UIImageView!
     
-    @IBOutlet weak var callToActionRoll: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        diceImageViewOne.image = #imageLiteral(resourceName: "DiceSix")
-        diceImageViewOne.alpha = 0.5
-        // Image literal allows me to low code the image change val
-        diceImageViewTwo.image = #imageLiteral(resourceName: "DiceTwo")
     }
     
+    var points = 0
+    var leftDiceIndex = 0
+    var rightDiceIndex = 0
+
+    @IBAction func callToActionRoll(_ sender: UIButton) {
+        
+        // Instead of doing a random number generator, we can use Array.randomElement(), to pick a random element inside the array...
+        let diceArray =  [#imageLiteral(resourceName: "DiceOne"), #imageLiteral(resourceName: "DiceTwo"), #imageLiteral(resourceName: "DiceThree"), #imageLiteral(resourceName: "DiceFour"), #imageLiteral(resourceName: "DiceFive"), #imageLiteral(resourceName: "DiceSix")]
+        
+        leftDiceIndex = Int.random(in: 0..<6)
+        rightDiceIndex = Int.random(in: 0..<6)
+        
+        
+        print("@left: \(leftDiceIndex), @right:\(rightDiceIndex)")
+        
+        diceImageViewOne.image = diceArray[leftDiceIndex]
+        diceImageViewTwo.image = diceArray[rightDiceIndex]
+        
+        if(leftDiceIndex == rightDiceIndex){
+            points += 1
+            
+            scoreLabel.text = "Score: \(points)"
+        }
+    }
     
 
 }
